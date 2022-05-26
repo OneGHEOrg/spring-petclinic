@@ -12,7 +12,7 @@ on:
 jobs:
   build:
 
-    runs-on: [self-hosted, liatrio]
+    runs-on: [self-hosted, kubernetes]
 
     steps:
       - uses: actions/checkout@v2
