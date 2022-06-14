@@ -13,6 +13,7 @@ on:
 jobs:
   build:
 
+    # adding comment to kick of PR builds
     runs-on: [self-hosted, aks, github-lab]
 
     steps:
