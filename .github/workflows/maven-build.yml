@@ -32,8 +32,40 @@ jobs:
 
       - name: Set up Buildah
         run: |
-          sudo apt-get -y update
-          sudo apt-get -y install buildah
+          export DEBIAN_FRONTEND=noninteractive
+
+          # Get dependencies
+          apt-get update
+          apt-get install -y \
+              curl \
+              build-essential \
+              libbtrfs-dev \
+              make \
+              bats \
+              git \
+              libapparmor-dev \
+              libdevmapper-dev \
+              libglib2.0-dev \
+              libgpgme11-dev \
+              libseccomp-dev \
+              libselinux1-dev
+
+          # Install goenv and golang
+          git clone https://github.com/syndbg/goenv.git ~/.goenv
+          echo 'export GOENV_ROOT="$HOME/.goenv"' >> ~/.bashrc
+          echo 'export PATH="$GOENV_ROOT/bin:$PATH"' >> ~/.bashrc
+          echo 'eval "$(goenv init -)"' >> ~/.bashrc
+          source ~/.bashrc
+          goenv install 1.16.15
+          goenv global 1.16.15
+          source ~/.bashrc
+
+          # Clone buildah and build
+          git clone https://github.com/containers/buildah ${GOPATH}/src/github.com/containers/buildah
+          cd ${GOPATH}/src/github.com/containers/buildah
+          go get -d ./
+          export GO111MODULE=auto
+          make runc all SECURITYTAGS="apparmor seccomp"
 
       - run: mvn package
 
