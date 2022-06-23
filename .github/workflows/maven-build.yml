@@ -15,12 +15,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Uses standard repo checkout action
       - uses: actions/checkout@v2
+      # Uses JDK installer action to prepare build environment
       - name: Set up JDK 11
         uses: actions/setup-java@v2
         with:
           java-version: '11'
           distribution: 'adopt'
           cache: maven
+      # Uses maven build wrapper script
+      # Testing commit sign-off feature
       - name: Build with Maven Wrapper
         run: ./mvnw -B package
