@@ -26,5 +26,6 @@ jobs:
           cache: maven
       # Uses maven build wrapper script
       # Testing commit sign-off feature
+      # Validation comment to check sign-off requirement
       - name: Build with Maven Wrapper
         run: ./mvnw -B package
