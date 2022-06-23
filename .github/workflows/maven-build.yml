@@ -25,6 +25,5 @@ jobs:
           distribution: 'adopt'
           cache: maven
       # Uses maven build wrapper script
-      # Testing commit sign-off feature
       - name: Build with Maven Wrapper
         run: ./mvnw -B package
